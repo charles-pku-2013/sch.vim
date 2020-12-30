@@ -8,7 +8,12 @@ function! <SID>SwitchFile(...)
         for new_ext in l:src_ext_set
             let l:new_fname = l:root . '.' . new_ext
             if filereadable(l:new_fname)
-                execute l:opencmd . l:new_fname
+                let l:window_id = bufwinnr(l:new_fname)
+                if l:window_id != -1
+                    execute l:window_id . "wincmd w"
+                else
+                    execute l:opencmd . l:new_fname
+                endif
                 return
             endif
         endfor
@@ -18,7 +23,12 @@ function! <SID>SwitchFile(...)
         for new_ext in l:hdr_ext_set
             let l:new_fname = l:root . '.' . new_ext
             if filereadable(l:new_fname)
-                execute l:opencmd . l:new_fname
+                let l:window_id = bufwinnr(l:new_fname)
+                if l:window_id != -1
+                    execute l:window_id . "wincmd w"
+                else
+                    execute l:opencmd . l:new_fname
+                endif
                 return
             endif
         endfor
